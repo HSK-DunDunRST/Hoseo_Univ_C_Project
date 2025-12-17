@@ -1,0 +1,57 @@
+/*
+	Source_25_11_27_2.c
+	로또게임 만들기 - 번호 수동 입력 시 중복 검사 포함 예제입니다.
+ */
+
+typedef struct _lotto{
+	int number[6];
+	int bonus;
+	int NO;
+}LOTTO;
+
+void initLotto(LOTTO* l){
+	for(int i=0;i<6;i++) l->number[i] = 0;
+	l->bonus = 0;
+	l->NO = 0;
+}
+
+int dup(LOTTO l, int num, int last){
+	for(int i=0;i<=last;i++){
+		if(l.number[i] == num) return 1;
+	}
+	return 0;
+}
+
+LOTTO createManual(int NO){
+	LOTTO l;
+	int num;
+	initLotto(&l);
+	l.NO = NO;
+	for(int i=0;i<6;i++){
+		printf("input number #%d : ", i+1);
+		scanf("%d", &num);
+		if(i==0) l.number[i] = num;
+		else if(i>0 && !dup(l, num, i-1)) l.number[i] = num;
+		else{
+			i--;
+			printf("중복발생.. 다시 뽑으세요..\n");
+		}
+	}
+	return l;
+}
+
+void printLotto(LOTTO l){
+	printf("#%d lotto number : %2d, %2d, %2d, %2d, %2d, %2d\n", l.NO,
+		l.number[0], l.number[1], l.number[2], l.number[3], l.number[4], l.number[5]);
+	printf("BONUS : %d\n", l.bonus);
+}
+
+int main()
+{
+	LOTTO l;
+
+	l = createManual(20201111);
+	printLotto(l);
+
+	return 0;
+}
